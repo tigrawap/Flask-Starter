@@ -80,7 +80,7 @@ The core over there is RemoteModal and Requests integrated with Flask-Starter it
 JS still requires some refactoring, but well, it works and very easy to use.  
 Meanwhile refer to this page or to the code for how-to-use.
 
-Your also can email me for questions or ask at stackoverflow with flask or flask-starter tags.  
+You also can email me for questions or ask at stackoverflow with flask or flask-starter tags.  
 This documentation will be expanded as soon as possible, as well as on your questions 
 
 ##### Core View 
@@ -138,6 +138,6 @@ You can easily set it in your prepare (or get, or post) method:
         
 ### more to come…
 
-Your also can email [Me](mailto:tigrawap@gmail.com) for questions or ask at stackoverflow with flask or flask-starter tags.    
+You also can email [Me](mailto:tigrawap@gmail.com) for questions or ask at stackoverflow with flask or flask-starter tags.    
 This documentation will be expanded as soon as possible, as well as on your questions 
 
