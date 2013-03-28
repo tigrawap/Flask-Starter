@@ -33,6 +33,10 @@ Server will be started on localhost:8080 port, to adjust it modify runserver.py
 ###Live demo
 Also, you can view some examples at http://flask-starter-demo.tigranet.com
 
+###Dependencies
+**Babel** used by forms and lately i18n support will be explained.  
+**Pygments** used for highlight syntax, so if you dont need it you can remove supplied Main blueprint and uninstall pygments with pip
+
 
 ## Overview
 
