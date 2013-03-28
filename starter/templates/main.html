@@ -212,4 +212,37 @@ class PageWithItemUser(MainPage):
              {%- endraw %}
             {%- endcode -%}
         </div>
+
+    <div class="well">
+    <h3>
+        And what about callbacks?
+    </h3>
+    <div class="alert alert-info">
+        Also easy. Just attach callback to the action. Alternative way will be to return your JS  <b>{{  '<script></script' }}></b> inside modal HTML
+    </div>
+        <a id="with_callback" data-href="{{ url_for('main.requires_post_message') }}" class="btn btn-primary action action-remote">Action with callback</a>
+        <a id="with_callback2" href="{{ url_for('main.lorem_ipsum') }}" class="btn btn-info modal_remote">Modal with callback</a>
+        {% block scripts %}
+        {{ super() }}
+        <script>
+            $('#with_callback,#with_callback2').data('callback',function(){
+                alert('Called back');
+            });
+        </script>
+        {% endblock %}
+{%code "html+jinja" %}
+{%- raw %}
+<a id="with_callback" data-href="{{ url_for('main.requires_post_message') }}" class="btn btn-primary action action-remote">Action with callback</a>
+<a id="with_callback2" href="{{ url_for('main.lorem_ipsum') }}" class="btn btn-info modal_remote">Modal with callback</a>
+{% block scripts %}
+    {{ super() }} {# by calling block and super() JS actualy placed in the HEAD of page #}
+    <script>
+        $('#with_callback,#with_callback2').data('callback',function(){
+            alert('Called back');
+        });
+    </script>
+{% endblock %}
+{%- endraw %}
+{%- endcode -%}
+    </div>
 {% endblock %}

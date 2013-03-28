@@ -42,7 +42,7 @@ define(['UI/Message','ll','Managers/Redirect'],function(Message,ll,RM){
                         $('#vdsModal').modal();
                         RemoteModal.recursiveModal('#vdsModal',response);
                     });
-                    return false;
+                    //return Requests.returnOrServercall(response,callback,callback_servercall);
                 }
                 return Requests.returnOrServercall(response,callback,callback_servercall);
 

@@ -85,7 +85,8 @@ define(['AJAX/Requests','Managers/Redirect'],function(Requests,RedirectManager){
         },
         initOnClick:function (e) {
           //$(this).attr('data-target','#vdsModal').attr('data-toggle','modal');
-          $(this).attr('data-target','#vdsModal')
+          $(this).attr('data-target','#vdsModal');
+          var link=$(this);
 
           var lv_target = $(this).attr('data-target');
 
@@ -94,6 +95,9 @@ define(['AJAX/Requests','Managers/Redirect'],function(Requests,RedirectManager){
           $(lv_target).data('modal-url',lv_url);
           $.getJSON(lv_url,function(data){
               Requests.checkResponse(data,function(){
+                  if(link.data('callback')){
+                      link.data('callback')(); //if has callback -> time to call
+                  }
                   RemoteModal.recursiveModal(lv_target,data);
               });
           });
