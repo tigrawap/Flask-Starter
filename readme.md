@@ -1,6 +1,6 @@
 # Flask-Starter
 
-Structer of Flask project easily used both for small and big apps. Includes great communication layer, between APP and client
+Structure of Flask project easily used both for small and big apps. Includes great communication layer, between APP and client
 
 ##Zen##
 
