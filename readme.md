@@ -13,7 +13,7 @@ Is not it better to just add `login_required=True` to class definition of View a
 
 So in my opinion in most cases View should be the extension of some Base View. This does not mean that you cannot use simple function-based view when you need.
 
-Plus, the Flask itself and is documentation is Great, but it does not provide whole overview of project
+Plus, the Flask itself and it's documentation is Great, but it does not provide whole overview of project
 
 ##Installation
 
@@ -35,7 +35,7 @@ Also, you can view some examples at http://flask-starter-demo.tigranet.com
 
 ###Dependencies
 **Babel** used by forms and lately i18n support will be explained.  
-**Pygments** used for highlight syntax, so if you dont need it you can remove supplied Main blueprint and uninstall pygments with pip
+**Pygments** used for syntax highlight , so if you dont need it you can remove supplied Main blueprint and uninstall pygments with pip
 
 
 ## Overview
