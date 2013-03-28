@@ -79,7 +79,7 @@ class MainPage(MethodView):
     required_permissions=[] #required permissions for this page (moderator/admin)
     method = 'html'
     remember_modal=False
-    #if set to true->returns command in open redirect inside modal window. Javascript should also add ?method=modal to it
+    #if set to True and this View displayed as modal and requires login-> login window will be automaticaly shown and after login redirected to this page
     redirect_in_modal=None
     #determines if redirect occured on this page should be in modal or not, only if window displayed as modal
     page_header=None #used for both regular and modal pages

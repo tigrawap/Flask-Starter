@@ -37,7 +37,9 @@ For example, by default in **settings.py**
 `ENVIRONMENT_CONFIG_VAR="STARTER_CONFIG"`  
 So by running   
 `export STARTER_CONFIG="/path/to/settings_production.py"`
-before `python runserver.py` this settings file also will be loaded.
+before `python runserver.py` this settings file also will be loaded.  
+On production I advise to use `supervisor` and with it you can just specify 
+`environment=STARTER_CONFIG="/path/to/settings_production.py"` inside task definition
 
 ##### Folders/Files
 **/core** stores base View and other additional functions, the idea that everything can be done without touching /core, but you for sure can if you want, it is also one of the reasons, why I don't want to put this Starter to pypi, it is not module, it is not library. It is Starter-project which you can modify however you want  
@@ -76,4 +78,62 @@ You can take a look on examples(live page) by following this link:
 
 The core over there is RemoteModal and Requests integrated with Flask-Starter itself.   
 JS still requires some refactoring, but well, it works and very easy to use.  
-Meanwhile refer to this page or to code for how-to-use.
+Meanwhile refer to this page or to the code for how-to-use.
+
+Your also can email me for questions or ask at stackoverflow with flask or flask-starter tags.  
+This documentation will be expanded as soon as possible, as well as on your questions 
+
+##### Core View 
+
+Has different attributes, for controlling behaviour, display style and other.  
+Meanwhile please refer to it's definition, it's documented somehow.
+
+Just some of available attributes for class definition: 
+ 
+- **login_required** bool, view required login
+- **track** bool, default True, tracking for page  
+**Definition of tracking:**  every View has access to `RequestTracker` which stores current and previous location in session. They can be accessed by `self.tracker.current`, `self.tracker.referrer` and `self.tracker.prev_referrer` inside view. This have various usage, more documentation on this matter will come later. BTW, if `track=False` self.tracker.current actualy refers to last tracked url, not current one.
+
+- **template** template to display for this View without need to redefine `def get`  
+So minimal Class will look like this
+***
+
+	class SimplePage(MainPage):
+		template="simple_page.html"
+
+And if you want to add some functional and add something to context of it - yet again, no need to redefine get:
+
+	class SimplePage(MainPage):
+		template="simple_page.html"
+		page_header="My Cool Simple Page"
+		def prepare(*k,**kk	):
+			self.context['some_data']="data comes here"
+			super(SimplePage,self).prepare(*k,*kk)
+			
+But if you want…you can, still simple. All the magic done on inner level, so if page will be requested as Modal -> it will be shown as modal.
+
+
+	class SimplePage(MainPage):
+		template="simple_page.html"
+		page_header="My Cool Simple Page"
+		def get(*k,**kk	):
+			self.context['some_data']="data comes here"
+			return render_template(self.template,**self.context)
+
+**Another example of core View usage.  **  
+It is often useful to set title, keywords, description to the page.
+
+You can easily set it in your prepare (or get, or post) method:
+
+	def setMetatada(self,title=None,keywords=None,description=None,description_append=False,title_append_base=True,title_append_current=False,keywords_append_current=True):
+        """
+        :param title:  New title
+        :param keywords: New keywords
+        :param description: New Description
+        :param description_append: Should description be appended to base one?
+        :param title_append_base:  Should title be appended to base one?
+        :param title_append_current: Should title be appended to current one?
+        :param keywords_append_current: Should keywords be appended to current one?
+        
+        
+### more to come...
