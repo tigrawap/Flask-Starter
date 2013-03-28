@@ -40,14 +40,14 @@
             {% if current_user.is_active() %}
                 <div class="fr">
                     <a class="btn btn-navbar" data-toggle="collapse"  href="#user_nav">
-                      {{ current_user|safe }}
+                      {{ current_user}}
                     </a>
                     <div class="nav-collapse" id="user_nav" >
                         <ul class="nav">
                             <li><a href="{{ url_for('user.logout') }}" class="action">Logout</a></li>
                             <li class="visible-desktop" style="border-left:1px solid #d5d5d5;">
                                 <a href="#">
-                                    {{ current_user|safe }}
+                                    {{ current_user}}
                                 </a>
                             </li>
                         </ul>
