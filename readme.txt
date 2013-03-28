@@ -7,9 +7,12 @@ Installation:
 a) Create new virtual env anywhere (but better not inside project itself) `virtualenv starter-env`
 b) Activate it `source starter-env/bin/activate`
 c) Install dependencies: `pip install -r requirements.txt`
-d) Run server: `python runserver.py`
+d) Copy settings_default.py to settings.py
+e) Run server: `python runserver.py`
+
 
 Server will be started on localhost:8080 port, to adjust it modify runserver.py
 
 To start creating your own project first read the documentation(which does not exists yet)
+Also, you can view some examples at http://flask-starter.tigranet.com
 So read the code :)
