@@ -15,6 +15,25 @@ So in my opinion in most cases View should be the extension of some Base View. T
 
 Plus, the Flask itself and is documentation is Great, but it does not provide whole overview of project
 
+##Installation
+
+To test this on live you will need:
+
+1) Python, preferably 2.7, not tested with prior versions.  
+2) virtualenv  
+
+a) Create new virtual env anywhere (but better not inside project itself) `virtualenv starter-env`  
+b) Activate it `source starter-env/bin/activate`  
+c) Install dependencies: `pip install -r requirements.txt`  
+d) Copy settings_default.py to settings.py  
+e) Run server: `python runserver.py`  
+
+
+Server will be started on localhost:8080 port, to adjust it modify runserver.py  
+###Live demo
+Also, you can view some examples at http://flask-starter-demo.tigranet.com
+
+
 ## Overview
 
 So, as been told, One View to Rule Them All.  
