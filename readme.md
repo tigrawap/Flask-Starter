@@ -136,4 +136,8 @@ You can easily set it in your prepare (or get, or post) method:
         :param keywords_append_current: Should keywords be appended to current one?
         
         
-### more to come...
+### more to come…
+
+Your also can email [Me](mailto:tigrawap@gmail.com) for questions or ask at stackoverflow with flask or flask-starter tags.    
+This documentation will be expanded as soon as possible, as well as on your questions 
+
