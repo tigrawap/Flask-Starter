@@ -1,0 +1,91 @@
+html, body { height: 100%;}
+
+footer {
+    padding: 0 10px 0 10px;
+    border-top: 1px solid #eee;
+    color: white;
+    background-color: black;
+}
+
+footer.container-fluid{
+    max-width: 3000px;
+
+}
+
+footer > p {
+    margin-bottom: 11px;
+    margin-top: 13px;
+}
+
+.wrapper {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -43px;
+}
+
+.push { height: 63px; }
+.wrapper > .container-fluid {
+    padding-top: 60px;
+}
+
+@media (max-width: 979px){
+    .wrapper > .container-fluid {
+        padding-top: 0px;
+    }
+}
+
+
+@media (max-width: 767px){
+    footer.container-fluid {
+    margin-right: -20px;
+    margin-left: -20px;
+        padding-left: 20px;
+    }
+}
+
+
+.incenter{
+    text-align: center;
+}
+
+.fl{
+    float: left;
+}
+
+.fr{
+    float: right;
+}
+
+.of{
+    overflow: hidden;
+}
+
+
+#message_bar{
+    position: fixed;
+    bottom:0;
+    left:0;
+    width: 100%;
+}
+
+#message_bar .message{
+    background:url("/static/img/tr30pixel.png") repeat;
+    width:100%;
+    padding: 15px;
+    font-size: 160%;
+}
+
+#message_bar .good{
+    color:green;
+    font-weight: bold;
+}
+
+#message_bar .bad{
+    color:darkred;
+    font-weight: bold;
+}
+
+.highlighttable{
+    margin-top: 10px;
+}

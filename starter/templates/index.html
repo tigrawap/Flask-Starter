@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% block scripts %}
+    <title>{{title}}</title>
+    <meta name="description" content="{{ description }}">
+    <meta name="keywords" content="{{ keywords }}">
+
+    {% if LOCAL_SERVER %}
+        <script src="{{ config.STATIC_URL }}/js/jquery.js"></script>
+        <link href="{{ config.STATIC_URL }}/css/bootstrap.css" rel="stylesheet">
+        <script src="{{ config.STATIC_URL }}/js/bootstrap.js"></script>
+    {% else %}
+        <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+        <script src="//code.jquery.com/jquery-1.9.1.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    {% endif %}
+
+    <link href="{{ config.STATIC_URL }}/css/main.css" rel="stylesheet">
+    <script>
+            var global_debug={% if config.DEBUG %}true{% else %}false{% endif %};
+    </script>
+    <script data-main="main" src="{{ config.STATIC_URL }}/js/require.js"></script>
+    <script type="text/javascript">
+      requirejs.config({
+          baseUrl:"{{ config.STATIC_URL }}/js/"
+      });
+    </script>
+    <link href="{{ config.STATIC_URL }}/css/highlight.css" rel="stylesheet">
+
+
+    {% endblock %}
+
+</head>
+<body>
+    <div class="wrapper">
+    <div class="navbar navbar-fixed-top" id="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+            {% if current_user.is_active() %}
+                <div class="fr">
+                    <a class="btn btn-navbar" data-toggle="collapse"  href="#user_nav">
+                      {{ current_user|safe }}
+                    </a>
+                    <div class="nav-collapse" id="user_nav" >
+                        <ul class="nav">
+                            <li><a href="{{ url_for('user.logout') }}" class="action">Logout</a></li>
+                            <li class="visible-desktop" style="border-left:1px solid #d5d5d5;">
+                                <a href="#">
+                                    {{ current_user|safe }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            {% else %}
+                        <ul class="nav" style="float: right">
+                            <li>
+                                <a class="modal_remote" href="{{ url_for('user.login') }}" >Login</a>
+                            </li>
+                        </ul>
+            {% endif %}
+            <a class="btn btn-navbar fl" data-toggle="collapse" data-target="#nav_menu" style="float:left">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </a>
+          <a class="brand" href="{{ BASE_URL }}">Flask-Starter</a>
+          <div class="nav-collapse" id="nav_menu">
+            <ul class="nav">
+              <li id="navbar_library_list"><a href="">All demos</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+        {% if page_header %}
+        <div class="row-fluid page-header" style="padding:0;margin-top: 0px;">
+            <div class="span8">
+                <div class="row-fluid">
+                    <h3 style="padding:0;margin:0">
+                        {% block page_header %}
+                            {% if page_header_is_safe %}
+                                {{ page_header|safe }}
+                            {% else %}
+                                {{ page_header }}
+                            {% endif %}
+                        {% endblock %}
+                    </h3>
+                </div>
+                <div class="row-fluid">
+                    {% block under_header%}
+                    {% endblock %}
+                </div>
+            </div>
+            <div class="span4 header_additional_data">
+                <div class="fr" style="margin-bottom: 3px;">
+                {% block header_additional_data %}
+                     {{ header_additional_data|safe }}
+                {% endblock %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <div class="row-fluid">
+            {% block error %}
+                {% if errors %}
+                    {% for error in errors %}
+                        <div class="alert alert-error">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endblock %}
+        </div>
+        <div class="row-fluid" style="padding-bottom: 5px;">
+                <div class="span12">
+            {% block maincontent%}
+            {% endblock %}
+                </div>
+        </div>
+        <div id="content_end"></div>
+    </div>
+
+    <div id="message_bar" class="incenter">
+        <div id="message_bar_messages">
+            <div class="message hide good">
+                Done
+            </div>
+            <div class="message hide bad">
+                Error
+            </div>
+            <div class="message hide">
+
+            </div>
+        </div>
+    </div>
+    <div id="vdsModal" class="modal fade"></div>
+    <form id="csrf_embed_form" method="post">
+        <input type="hidden" id="csrf_embed" value="{{ session.csrf }}" name="csrf">
+    </form>
+
+    <div class="push"><!--//--></div>
+    </div>
+    <footer class="container-fluid of">
+            <p class="fl"><a href="mailto:tigrawap@gmail.com" style="color:white">Tigra</a> (c) 2012</p>
+            <!-- AddThis Button BEGIN -->
+        {% if config.SHOW_SOCIAL_BUTTONS %}
+        <div class="addthis_toolbox addthis_default_style fr" style="padding-top:8px;height: 20px" addthis:url="http://www.slashroll.net">
+        <a class="fl addthis_button_tweet"></a>
+        <a class="fl addthis_button_pinterest_pinit"></a>
+        <a class="fl addthis_counter addthis_pill_style"></a>
+        </div>
+        <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-501840326db07205"></script>
+        <!-- AddThis Button END -->
+
+        <div class="fr" style="padding-top: 8px">
+            <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fwww.slashroll.net&amp;send=false&amp;layout=button_count&amp;width=140&amp;show_faces=true&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21&amp;appId=175229439168778" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:140px; height:21px;" allowTransparency="true"></iframe>
+        </div>
+        {% endif %}
+    </footer>
+{{ view.item_user }}
+  </body>
+</html>

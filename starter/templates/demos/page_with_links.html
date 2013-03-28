@@ -1,0 +1,16 @@
+{% extends extend_with %}
+
+{% block maincontent %}
+    {{ lipsum(n=5, html=True, min=3, max=5) }}
+    <div>
+    (try to logout before testing this out, forms also chained)<br>
+    <a href="{{ url_for('main.lorem_ipsum') }}" class="btn btn-info">Ipsum without required login</a><br>
+    <a href="{{ url_for('main.lorem_ipsum_login_required') }}" class="btn btn-info" style="margin-top:4px">Ipsum with required login</a><br>
+    <br>
+    <br>
+    <a href="{{ url_for('main.page_with_links2') }}" class="btn btn-warning">Another page with links</a><br>
+    <a href="/" class="btn btn-primary direct_link" style="margin-top:4px">Link opened in main window</a><br>
+    <a href="/" class="btn btn-primary popup_window" style="margin-top:4px">Link opened in new tab/window</a><br>
+
+    </div>
+{% endblock %}

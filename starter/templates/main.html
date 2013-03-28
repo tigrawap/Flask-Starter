@@ -1,0 +1,215 @@
+{% extends extend_with %}
+
+{% block maincontent %}
+    <div class="hero-unit">
+        Those demos demonstrate ability of Flask-Starter to easily show same content inside both modal and regular windows.
+    <br>
+        Also, chain loading, submitting of forms from modal windows with return to page inside modal or normal redirect.
+    <br>
+        Everything easily configured on View-level and by html classes.
+    <br>
+        This is only brief overview of RemoteModal and Requests JS modules capabilities. But for beginners the structure of project itself should be more interesting.
+    </div>
+        <div class="well">
+            <h3>Lorem ipsum demo</h3>
+            <a href="{{ url_for('main.lorem_ipsum') }}" class="btn btn-primary">Separate page</a>
+            <a href="{{ url_for('main.lorem_ipsum') }}" class="btn btn-info modal_remote">Modal page</a>
+             {%code "html+jinja" %}
+                 {%- raw %}
+<a href="{{ url_for('main.lorem_ipsum') }}" class="btn btn-primary">Separate page</a>
+<a href="{{ url_for('main.lorem_ipsum') }}" class="btn btn-info modal_remote">Modal page</a>
+                 {%- endraw %}
+            {%- endcode -%}
+
+            {%code "python" %}
+                     {%- raw %}
+class LoremIpsum(MainPage):
+    page_header = "Lorem Ipsum"
+    template = "demos/lorem_ipsum.html"
+                 {%- endraw %}
+             {%- endcode -%}
+        </div>
+
+        <div class="well">
+            <h3>Lorem ipsum, login required</h3>
+            <a href="{{ url_for('main.lorem_ipsum_login_required') }}" class="btn btn-primary">Separate page</a>
+            <a href="{{ url_for('main.lorem_ipsum_login_required') }}" class="btn btn-info modal_remote">Modal page</a>
+
+            {%code "html+jinja" %}
+                    {%- raw %}
+<a href="{{ url_for('main.lorem_ipsum_login_required') }}" class="btn btn-primary">Separate page</a>
+<a href="{{ url_for('main.lorem_ipsum_login_required') }}" class="btn btn-info modal_remote">Modal page</a>
+                    {%- endraw %}
+               {%- endcode -%}
+
+            {%code "python" %}
+                     {%- raw %}
+ class LoremIpsumLoginRequired(MainPage):
+     login_required = True
+     page_header = "Lorem Ipsum, Login Required"
+     template = "demos/lorem_ipsum.html"
+                 {%- endraw %}
+             {%- endcode -%}
+        </div>
+
+        <div class="well">
+            <h3>Button as Post</h3>
+            <a data-href="{{ url_for('main.requires_post') }}" class="btn btn-primary action">1) POST it to the next page</a>
+            <div class="alert alert-info"><b>action</b> class forces request to link to be made with POST method with CSRF key</div>
+                {%code "html+jinja" %}
+                    {%- raw %}
+<a data-href="{{ url_for('main.requires_post') }}" class="btn btn-primary action">1) POST it with traversing page</a>
+                    {%- endraw %}
+                {%- endcode -%}
+                {%code "python" %}
+                 {%- raw %}
+class ActionRequiresPost(MainPage):
+ track = False #no need to track such actions
+ page_header = "Action submitted"
+
+ def get(self,*k,**kk):
+     #if came by regular link -> just redirect to current page
+     return redirect(self.tracker.current)
+
+ @action #forces csrf check
+ def post(self,*k,**kk):
+     if self.method=='modal':
+         return render_template("demos/action_submitted.html",**self.context)
+     else:
+         self.context['page_header']="Submitted"
+         return redirect(url_for('main.action_submitted'))
+                     {%- endraw %}
+                 {%- endcode -%}
+            <a style="margin-top: 4px;" data-href="{{ url_for('main.requires_post') }}" class="btn btn-primary action action-remote">2) POST it in background with modal</a>
+            <div class="alert alert-info"><b>action-remote</b> class sends request by AJAX and expect response, also sets method to "modal", so same View actualy used</div>
+
+{%code "html+jinja" %}
+    {%- raw %}
+<a style="margin-top: 4px;" data-href="{{ url_for('main.requires_post') }}" class="btn btn-primary action action-remote">2) POST it in background with modal</a>
+    {%- endraw %}
+{%- endcode -%}
+            <a style="margin-top: 4px;" data-href="{{ url_for('main.requires_post_message') }}" class="btn btn-primary action action-remote">3) POST it with message response</a>
+            <div class="alert alert-info">This view is very similar and classes are same. The only difference is different response from server which produce different client side result</div>
+{%code "python" %}
+ {%- raw %}
+class ActionRequiresPostMessage(ActionRequiresPost):
+    get=None
+
+    @action
+    def post(self,*k,**kk):
+        return response_ok(message="Action submitted")
+     {%- endraw %}
+ {%- endcode -%}
+        </div>
+
+        <div class="well">
+            <h3>Action with confirmation</h3>
+            <a data-href="{{ url_for('main.action_with_confirmation') }}" class="btn btn-danger action action-remote">Delete</a>
+            <a data-href="{{ url_for('main.action_with_confirmation_create') }}" class="btn btn-success action action-remote">Roll Dice!</a>
+            <div class="alert alert-info">
+                Same View called two times, one time this view returns confirmation URL and if user confirms it View called again, but this time confirmation verification passes.
+                <br>Yet again, control on server side, just action and action-remote in html.
+                <br>Also take a note, in Views/Pages that not designated to be viewed by regular GET request it is better to specify data-href and not href, so crawlers wont follow it and user also wont follow if some error occured.
+                <br>But in views like Lorem ipsum it is better to leave HREF, so bots will follow it and see full page, while user sees modal. Same link, altering on-click.
+            </div>
+{%code "html+jinja" %}
+    {%- raw %}
+<a data-href="{{ url_for('main.action_with_confirmation') }}" class="btn btn-danger action action-remote">Delete</a>
+<a data-href="{{ url_for('main.action_with_confirmation_create') }}" class="btn btn-success action action-remote">Roll Dice!</a>
+    {%- endraw %}
+{%- endcode -%}
+{%code "python" %}
+{%- raw %}
+class ActionWithConfirmation(MainPage):
+    get=None
+
+    @action
+    def post(self,*k,**kk):
+        if request.args.get('confirmed'):
+            return response_ok(message="Item deleted")
+        else:
+            return response_request_confirmation(
+                message="Are you sure?",
+                confirmation_url=url_for('.action_with_confirmation',confirmed=1)
+            )
+
+class ActionWithConfirmationCreate(MainPage):
+    template = "demos/created_item_description.html"
+    page_header = "Done!"
+
+
+    get=None
+
+    @action
+    def post(self,*k,**kk):
+        if request.args.get('confirmed'):
+            return render_template(self.template,**self.context)
+        else:
+            return response_request_confirmation(
+                message="Are you sure? You got only one chance!",
+                confirmation_url=url_for('.action_with_confirmation_create',confirmed=1,method=self.method)
+            )
+ {%- endraw %}
+{%- endcode -%}
+        </div>
+
+        <div class="well">
+            <div>
+                <h3>Modal links chaining</h3>
+
+                <a data-href="{{ url_for('main.page_with_links') }}" class="btn btn-primary modal_remote">
+                    Page With link
+                </a>
+            <div class="alert alert-info">
+                Another popular issue is links inside modal windows. Some links should be opened in same modal, some in new window, some should redirect to another page.
+                <br>Everything is possible by simple classes!
+                <br>By default links are opened in modal and forms submitted to modal. While <b>.direct_link, .popup_window</b> can give desired behaviour.
+            </div>
+{%code "html+jinja" %}
+    {%- raw %}
+<a href="{{ url_for('main.lorem_ipsum') }}" class="btn btn-info">Ipsum without required login</a><br>
+<a href="{{ url_for('main.lorem_ipsum_login_required') }}" class="btn btn-info">Ipsum with required login</a><br>
+<br>
+<br>
+<a href="{{ url_for('main.page_with_links2') }}" class="btn btn-warning">Another page with links</a><br>
+<a href="/" class="btn btn-primary direct_link" >Link opened in main window</a><br>
+<a href="/" class="btn btn-primary popup_window">Link opened in new tab/window</a><br>
+    {%- endraw %}
+{%- endcode -%}
+            </div>
+        </div>
+
+        <div class="well">
+            <h3>User-owned pages</h3>
+                <a href="{{ url_for('main.page_with_item_user') }}" class="btn btn-warning">
+                    Only user "Tigra" can access
+                </a>
+                <a data-href="{{ url_for('main.page_with_item_user') }}" class="btn btn-warning modal_remote">
+                    Modal
+                </a>
+
+            <div class="alert alert-info">
+                Just redefine <b>view_level_permissions</b> in your View class, attach User object to self.item_user and it will be compared with current_user automaticaly<br>
+            </div>
+            {%code "python" %}
+            {%- raw %}
+class PageWithItemUser(MainPage):
+    template = "demos/page_with_item_user.html"
+    page_header = "By Tigra for Tigra"
+
+    def view_level_permissions(self,*k,**kk):
+        self.item_user=User("Tigra")
+        return True
+
+#in Real world however, something like this usualy done
+    def view_level_permissions(self,item=item_id,*k,**kk):
+        self.__item=Item.get(item_id)
+        if self.__item is None:
+                return False
+
+        self.item_user=User.get(self.__item.user_id)
+        return True
+             {%- endraw %}
+            {%- endcode -%}
+        </div>
+{% endblock %}

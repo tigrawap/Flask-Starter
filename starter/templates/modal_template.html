@@ -1,0 +1,16 @@
+{% block scripts %}
+{% endblock %}
+
+<div class="modal-header">
+    <button class="close" data-dismiss="modal">×</button>
+    <h3>{% if page_header %}{{ page_header }}{% else %}&nbsp;{% endif %}</h3>
+  </div>
+  <div class="modal-body">
+      {% block maincontent %}
+      {% endblock %}
+  </div>
+  <div class="modal-footer">
+      {% block modal_buttons %}
+          <a href="#" class="btn" data-dismiss="modal">Close</a>
+      {% endblock %}
+</div>

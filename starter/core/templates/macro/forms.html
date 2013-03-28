@@ -1,0 +1,162 @@
+{% macro render_form(form,title="",submit_value="Submit",classes={},action=None,has_files=True,show_buttons=True,form_type="horizontal") -%}
+
+<form method="POST" class="form-{{ form_type }}" {% if has_files %}enctype="multipart/form-data"{% endif %} {% if action %}action="{{ action }}"{% endif %}>
+<fieldset>
+    {% if  form.tna_data['title'] or title %}
+    <legend>
+        {% if form.tna_data['title'] %}
+        {{ form.tna_data['title'] }}
+        {% else %}
+        {{ title }}
+        {% endif %}
+    </legend>
+    {% endif %}
+        {% for name,field in form._ordered_fields %}
+            {% if field.widget.__class__.__name__=='HiddenInput'%}
+                <div class="control-group" style="margin-bottom: 0">
+                    {{ field(class="hidden") }}
+                </div>
+                {% continue %}
+            {% elif field.type=='SubmitField'%}
+                {% continue %}
+            {% endif %}
+
+            {% if field.widget.__class__.__name__=='BooleanInput' %}
+                        <label class="nonmargin" for="{{ name }}">
+                            {{ field.label['text']|safe }}
+                        </label>
+                        {{ field }}
+                        <div  id="errors_{{ name }}" class="errors">
+                        {% if field.errors %}
+                            {% for error in field.errors %}
+                                <div>{{ error|safe }}</div>
+                            {% endfor %}
+                        {% endif %}
+                        </div>
+                {% continue %}
+            {% endif %}
+
+        <div id="row_{{ field['name'] }}" class="control-group {% if field.errors %}error{% endif %}">
+            {% if field.flags.required %}
+                {% set lclass="control-label required" %}
+            {% else %}
+                {% set lclass="control-label" %}
+            {% endif %}
+
+            {% set rclass="" %}
+
+            {% if classes[field['name']] %}
+               {% set rclass=rclass+" "+classes[field['name']] %}
+            {% endif %}
+
+          {{ field.label(class_=lclass)|safe }}
+        <div class="controls">
+          {{ field(class_='input'+""+rclass)|safe }}
+
+
+            <span class="help-inline"   id="errors_{{ name }}" >
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    {{ error|safe }}
+                {% endfor %}
+            {% endif %}
+            </span>
+
+            {% if field.description %}
+                <p class="help-block">{{ field.description|safe }}</p>
+            {% endif %}
+        </div>
+
+
+
+            
+        </div>
+        {% endfor %}
+     {% if show_buttons %}
+      <div class="form-actions">
+      {% for name,field in form._ordered_fields %}
+          {% if field.type=='SubmitField' %}
+              {{ field(class="btn btn-primary",id="") }}
+          {% endif %}
+      {% endfor %}
+      </div>
+        {% endif %}
+</fieldset>
+</form>
+{%- endmacro %}
+
+{% macro render_field(field,label=None,help_inline=True) %}
+<div class="control-group  {% if field.errors %}error{% endif %}">
+        {{ field.label(class="control-label required") }}
+    <div class="controls">
+
+        {{ field() }}
+        {% if help_inline %}
+            {% set help="help-inline" %}
+        {% else %}
+            {% set help="help-block" %}
+        {% endif %}
+
+        <span class="{{ help }}"   id="errors_{{ field.name }}" >
+        {% if field.errors %}
+            {% for error in field.errors %}
+                {{ error|safe }}
+            {% endfor %}
+        {% endif %}
+        </span>
+
+
+        {% if field.description %}
+            <p class="help-block">{{ field.description|safe }}</p>
+        {% endif %}
+    </div>
+</div>
+{%- endmacro %}
+
+
+
+{% macro render_html(label,control) %}
+<div class="control-group">
+        <span class="control-label">{{ label }}</span>
+    <div class="controls">
+        {{ control }}
+    </div>
+</div>
+{%- endmacro %}
+
+{% macro render_inlined_checkbox(field) %}
+    <div class="control-group {% if field.errors %}error{% endif %}">
+    <div class="controls">
+    <label class="checkbox">
+        {{ field.label.text|safe }}
+        {{ field(class_='checkbox') }}
+        <span class="help-inline"   id="errors_{{ field.name }}" >
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    {{ error|safe }}
+                {% endfor %}
+            {% endif %}
+            </span>
+    </label>
+    </div>
+    </div>
+{% endmacro %}
+
+{% macro render_submit(field,back_url=None) %}
+    <div class="form-actions">
+          {{ field(class="btn btn-primary") }}
+            {% if back_url %}
+                <a class="btn btn-warning" href="{{ back_url }}">
+                    {{ _('Back') }}
+                </a>
+            {% endif %}
+    </div>
+{%- endmacro %}
+
+{% macro render_hiddens(hiddens=[]) %}
+    <div class="control-group" style="margin-bottom: 0">
+    {% for hidden in hiddens %}
+        {{ hidden(class="hidden") }}
+    {% endfor %}
+    </div>
+{%- endmacro %}

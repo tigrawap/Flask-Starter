@@ -1,0 +1,4 @@
+settings.py
+settings_production.py
+*.pyc
+.idea

@@ -1,0 +1,22 @@
+{% extends extend_with %}
+
+{% from "/macro/forms.html" import render_field,render_hiddens,render_submit%}
+
+
+{% block maincontent%}
+    <form method="post" id='login_form' action='{{ request.url }}' {% if method=='modal' %}class="modal_form"{% endif %}>
+               {{ render_hiddens([form.csrf]) }}
+               {{ render_field(form.name) }}
+
+               {% if method!='modal' %}
+                    {{ render_submit(form.submit) }}
+              {% endif %}
+           </form>
+{% endblock %}
+
+{% if method=='modal' %}
+    {% block modal_buttons%}
+        <a href="#" class="btn" data-dismiss="modal">Close</a>
+        <a href="#" class="btn btn-primary" onclick="$('#login_form').submit();return false;">Login</a>
+    {% endblock %}
+{% endif %}

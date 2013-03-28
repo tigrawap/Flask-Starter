@@ -1,0 +1,7 @@
+{% extends extend_with %}
+
+{% block maincontent %}
+    <div class="alert alert-info">
+        Congratulation, you rolled: {{ range(1,7)|random}}
+    </div>
+{% endblock %}
