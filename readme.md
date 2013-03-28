@@ -11,7 +11,7 @@ But the point is, that most of people do it with function-based Views.
 Well, actualy nothing wrong with it, you can decorate them, you can add pre-request and after-request handles. But common, this is a mess.  
 Is not it better to just add `login_required=True` to class definition of View and `admin_required` to class definition of AdminPage View instead of messing around with decorators?
 
-So in my opinion in most cases View should be the extension of some Base View. This does not mean that you cannot simple function-based view when you need.
+So in my opinion in most cases View should be the extension of some Base View. This does not mean that you cannot use simple function-based view when you need.
 
 Plus, the Flask itself and is documentation is Great, but it does not provide whole overview of project
 
