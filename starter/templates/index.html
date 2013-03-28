@@ -69,14 +69,15 @@
           <a class="brand" href="{{ BASE_URL }}">Flask-Starter</a>
           <div class="nav-collapse" id="nav_menu">
             <ul class="nav">
-              <li id="navbar_library_list"><a href="">All demos</a></li>
+              <li id=""><a href="">All demos</a></li>
+              <li id=""><a href="https://github.com/tigrawap/Flask-Starter">Github page</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
 
-    <div class="container-fluid">
+        <div class="container-fluid" id="main_container">
         {% if page_header %}
         <div class="row-fluid page-header" style="padding:0;margin-top: 0px;">
             <div class="span8">
@@ -162,6 +163,5 @@
         </div>
         {% endif %}
     </footer>
-{{ view.item_user }}
   </body>
 </html>

@@ -1,10 +1,17 @@
 html, body { height: 100%;}
+html{background-color:rgb(155,155,155);}
+#main_container{max-width:1000px;margin:0 auto;box-shadow:10px 10px 5px #757575;border-radius:5px;background-color:white}
+body{
+    background-color:transparent;
+}
+
 
 footer {
     padding: 0 10px 0 10px;
-    border-top: 1px solid #eee;
+    border-top: 1px solid #b8860b;
     color: white;
     background-color: black;
+    width: 100%;
 }
 
 footer.container-fluid{
