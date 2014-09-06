@@ -1,11 +1,11 @@
 # Flask-Starter
 
-Structure of Flask project easily used both for small and big apps. Includes great communication layer, between APP and client
+Structure of Flask project easily used both for small and big apps. Includes great communication layer, between APP and client.
 
 ##Zen##
 
 I see a lot of questions from Flask beginners, how to add some content to every page.  
-How to write in DRY style in Flask, etc ,etc
+How to write in DRY style in Flask, etc, etc.
 
 But the point is, that most of people do it with function-based Views.  
 Well, actualy nothing wrong with it, you can decorate them, you can add pre-request and after-request handles. But common, this is a mess.  
@@ -13,7 +13,7 @@ Is not it better to just add `login_required=True` to class definition of View a
 
 So in my opinion in most cases View should be the extension of some Base View. This does not mean that you cannot use simple function-based view when you need.
 
-Plus, the Flask itself and it's documentation is Great, but it does not provide whole overview of project
+Plus, the Flask framework itself and its documentation is great, but it does not provide a whole overview of a well structured project.
 
 ##Installation
 
@@ -29,7 +29,7 @@ d) Copy settings_default.py to settings.py
 e) Run server: `python runserver.py`  
 
 
-Server will be started on localhost:8080 port, to adjust it modify runserver.py  
+Server will be started on localhost:8080 port, to adjust it modify runserver.py
 ###Live demo
 Also, you can view some examples at http://flask-starter-demo.tigranet.com
 
@@ -46,7 +46,7 @@ Too bad, __OVtRTA__ sucks as a name
 ### Structure
 
 Flask-Starter utilizes Flask blueprints.   
-You can use blueprints as sepparate applications, attach some blueprint to specific subdomain and etc.  
+You can use blueprints as separate applications, attach a blueprint to a specific subdomain, etc.  
 But you also can use blueprints for grouping logic.  
 For example: User blueprint for all user-related tasks and models.
 
@@ -81,8 +81,8 @@ Use this file as start point to create your generic view
 Jinja2 Templates inheritance, another great thing.  
 Take a look on index.html and modal_template.html
  
-View class decides which one to use as starting point via **extends_with** attribute.  
-Want to use some other template as starting point for View and it's child Views? Just change this attribute on any level.
+The View class decides which one to use as starting point via the **extends_with** attribute.  
+Want to use some other template as starting point for a View and its child Views? Just change this attribute on any level.
 
 	class AdminPage(MainPage):
 		extend_with="admin_page.html"
@@ -96,7 +96,7 @@ Inside template always use
 ##### JS, CSS
 Bootstrap, jQuery and require.js included inside this Starter project, as well as examples.
 
-You can take a look on examples(live page) by following this link:
+You can take a look on examples (live page) by following this link:
 **<http://flask-starter-demo.tigranet.com>**
 
 The core over there is RemoteModal and Requests integrated with Flask-Starter itself.   
@@ -104,7 +104,7 @@ JS still requires some refactoring, but well, it works and very easy to use.
 Meanwhile refer to this page or to the code for how-to-use.
 
 You also can email me for questions or ask at stackoverflow with flask or flask-starter tags.  
-This documentation will be expanded as soon as possible, as well as basing on your questions 
+This documentation will be expanded as soon as possible base on your questions 
 
 ##### Core View 
 
@@ -115,7 +115,7 @@ Just some of available attributes for class definition:
  
 - **login_required** bool, view required login
 - **track** bool, default True, tracking for page  
-**Definition of tracking:**  every View has access to `RequestTracker` which stores current and previous location in session. They can be accessed by `self.tracker.current`, `self.tracker.referrer` and `self.tracker.prev_referrer` inside view. This have various usage, more documentation on this matter will come later. BTW, if `track=False` self.tracker.current actualy refers to last tracked url, not current one.
+**Definition of tracking:**  every View has access to `RequestTracker` which stores the current and previous locations in session. They can be accessed by `self.tracker.current`, `self.tracker.referrer` and `self.tracker.prev_referrer` inside view. This has various usages. More documentation on this matter will come later. BTW, if `track=False` self.tracker.current actually refers to last tracked url, not current one.
 
 - **template** template to display for this View without need to redefine `def get`  
 So minimal Class will look like this
@@ -162,5 +162,5 @@ You can easily set it in your prepare (or get, or post) method:
 ### more to come…
 
 You also can email [Me](mailto:tigrawap@gmail.com) for questions or ask at stackoverflow with flask or flask-starter tags.    
-This documentation will be expanded as soon as possible, as well as basing on your questions 
+This documentation will be expanded as soon as possible and will incorporate your questions.
 
